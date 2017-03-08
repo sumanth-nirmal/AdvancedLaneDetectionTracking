@@ -3,6 +3,8 @@
 
 ---
 
+python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6
+
 **Advanced Lane Finding Project**
 
 The goals / steps of this project are the following:
