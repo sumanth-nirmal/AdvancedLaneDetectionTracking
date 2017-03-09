@@ -52,12 +52,17 @@ def histogramPixels(warped_thresholded_image, offset=50, steps=6,
 
         # Take a count of all the pixels at each x-value in the horizontal slice
         histogram = np.sum(warped_thresholded_image[int(window_end_y):int(window_start_y), int(horizontal_offset):int(width - horizontal_offset)], axis=0)
+
+        # plt.clf()
         # plt.plot(histogram)
+        # plt.savefig('corrected_images/pipeline/rawHist.png')
 
         # Smoothen the histogram
         histogram_smooth = signal.medfilt(histogram, medianfilt_kernel_size)
 
+        # plt.clf()
         # plt.plot(histogram_smooth)
+        # plt.savefig('corrected_images/pipeline/smoothHist.png')
 
         # Identify the left and right peaks
         left_peaks = np.array(signal.find_peaks_cwt(histogram_smooth[:half_frame], np.arange(1, 10)))
@@ -78,7 +83,10 @@ def histogramPixels(warped_thresholded_image, offset=50, steps=6,
         for left_x_centre, y_centre in zip(left_x_window_centres, y_window_centres):
             left_x_additional, left_y_additional = getPixelWindow(warped_thresholded_image, left_x_centre,
                                                                        y_centre, window_radius)
+
+            # plt.clf()
             # plt.scatter(left_x_additional, left_y_additional)
+            # plt.savefig('corrected_images/pipeline/pixelsLeft.png')
             # Add pixels to list
             left_x.append(left_x_additional)
             left_y.append(left_y_additional)
@@ -87,15 +95,18 @@ def histogramPixels(warped_thresholded_image, offset=50, steps=6,
         for right_x_centre, y_centre in zip(right_x_window_centres, y_window_centres):
             right_x_additional, right_y_additional = getPixelWindow(warped_thresholded_image, right_x_centre,
                                                                          y_centre, window_radius)
+
+            # plt.clf()
             # plt.scatter(right_x_additional, right_y_additional)
+            # plt.savefig('corrected_images/pipeline/pixelsright.png')
             # Add pixels to list
             right_x.append(right_x_additional)
             right_y.append(right_y_additional)
 
     if len(right_x) == 0 or len(left_x) == 0:
-        print("Init no peaks for left or right")
-        print("left_x: ", left_x)
-        print("right_x: ", right_x)
+        # print("Init no peaks for left or right")
+        # print("left_x: ", left_x)
+        # print("right_x: ", right_x)
 
         horizontal_offset = 0
 
@@ -254,8 +265,8 @@ def addInfoToImage(img, curvature, vehicle_position, min_curvature, left_coeffs=
     font = cv2.FONT_HERSHEY_SIMPLEX
     cv2.putText(img, 'Radius of Curvature = %d(m)' % curvature, (50, 50), font, 1, (255, 255, 255), 2)
     left_or_right = "left" if vehicle_position < 0 else "right"
-    cv2.putText(img, 'Vehicle is %.2fm %s of center' % (np.abs(vehicle_position), left_or_right), (50, 100), font, 1,
+    cv2.putText(img, 'Vehicle is %.2fm %s from center' % (np.abs(vehicle_position), left_or_right), (50, 100), font, 1,
                 (255, 255, 255), 2)
     cv2.putText(img, 'Min Radius of Curvature = %d(m)' % min_curvature, (50, 150), font, 1, (255, 255, 255), 2)
-    cv2.putText(img, 'Left poly coefficients = %.3f %.3f %.3f' % (left_coeffs[0], left_coeffs[1], left_coeffs[2]), (50, 200), font, 1, (255, 255, 255), 2)
-    cv2.putText(img, 'Right poly coefficients = %.3f %.3f %.3f' % (right_coeffs[0], right_coeffs[1], right_coeffs[2]), (50, 250), font, 1, (255, 255, 255), 2)
+    #cv2.putText(img, 'Left poly coefficients = %.3f %.3f %.3f' % (left_coeffs[0], left_coeffs[1], left_coeffs[2]), (50, 200), font, 1, (255, 255, 255), 2)
+    #cv2.putText(img, 'Right poly coefficients = %.3f %.3f %.3f' % (right_coeffs[0], right_coeffs[1], right_coeffs[2]), (50, 250), font, 1, (255, 255, 255), 2)
