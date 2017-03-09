@@ -13,14 +13,15 @@ file = open("cameraCalibrationParams.pickle",'rb')
 object_file = pickle.load(file)
 file.close()
 
-
+count = 0;
 for fname in images:
     img = cv2.imread(fname)
-
+    count +=1
     # Undistort example calibration image
     img = mpimg.imread('camera_cal/calibration5.jpg')
     dst = cv2.undistort(img, object_file['mtx'], object_file['dist'], None, object_file['mtx'])
     plt.imshow(dst)
     cv2.imshow('img',dst)
-    cv2.waitKey(1200)
-    #plt.savefig('example_images/undistort_calibration.png')
+    #cv2.waitKey(1200)
+    # save the corrected images
+    plt.savefig('corrected_images/corrected_calibration' + str(count) + '.png')
