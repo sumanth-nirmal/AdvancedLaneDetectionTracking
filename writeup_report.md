@@ -23,7 +23,7 @@ The test images of the checker boards are used to calibrate the camera and get t
 distorted                                 |              undistorted 
 ------------------------------------------|--------------------------------- 
 ![d](./camera_cal/calibration9.jpg) | ![ud](./corrected_images/corrected_calibration9.png) 
-![d1](./test_images/test5.jpg)      | ![ud1](./corrected_images/corrected_calibration1.png) 
+![d1](./test_images/test5.jpg)      | ![ud1](./corrected_images/test51png) 
 
 run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6`         
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
@@ -32,10 +32,10 @@ this should compute the camera matrix and distoration cofficients and save them 
  ## Theresholding
  Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
 Below plot shows the thresholded images
-![t](./corrected_images/pipline/threshold5.png)
+![t](./corrected_images/pipline/thresholded5.png)
 
 Different thresholding techniques can be seen on a single image below (absSobel threshold, magnitude threshold, direction threshold, HLS threshold respectively)
-![ta](./corrected_images/threshold_subplot.png)
+![ta](./corrected_images/thresholded_subplot.png)
 
 These can be acheived by `python testThreshold.py`     
 
