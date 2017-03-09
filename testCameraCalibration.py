@@ -12,7 +12,7 @@ import matplotlib.image as mpimg
 from scipy.signal import find_peaks_cwt
 import pickle
 
-images = glob.glob('camera_cal/calibration*.jpg')
+images = glob.glob('test_images/test5.jpg') #glob.glob('camera_cal/calibration*.jpg')
 
 file = open("cameraCalibrationParams.pickle",'rb')
 object_file = pickle.load(file)
@@ -22,8 +22,6 @@ count = 0;
 for fname in images:
     img = cv2.imread(fname)
     count +=1
-    # Undistort example calibration image
-    img = mpimg.imread('camera_cal/calibration5.jpg')
     dst = cv2.undistort(img, object_file['mtx'], object_file['dist'], None, object_file['mtx'])
     plt.imshow(dst)
     cv2.imshow('img',dst)

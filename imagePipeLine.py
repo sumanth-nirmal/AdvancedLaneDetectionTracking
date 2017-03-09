@@ -132,8 +132,7 @@ def imagePipeLine(file, filepath=False):
     # plt.savefig('corrected_images/pipeline/poly7.png')
 
     # Determine curvature of the lane
-    # Define y-value where we want radius of curvature
-    # I'll choose the maximum y-value, corresponding to the bottom of the image
+    # Y is at the botom of image(max)
     y_eval = 500
     left_curverad = np.absolute(((1 + (2 * left_coeffs[0] * y_eval + left_coeffs[1])**2) ** 1.5)/(2 * left_coeffs[0]))
     right_curverad = np.absolute(((1 + (2 * right_coeffs[0] * y_eval + right_coeffs[1]) ** 2) **1.5)/(2 * right_coeffs[0]))
