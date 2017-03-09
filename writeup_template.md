@@ -1,9 +1,8 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+##Advance Lane Detection and Tracking
+
+This is project done as a part of Udacity Slef driving car engineer nano degree (https://www.udacity.com/drive)
 
 ---
-
-python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6
 
 **Advanced Lane Finding Project**
 
@@ -18,106 +17,101 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-[//]: # (Image References)
+## Calibration
+The test images of the checker boards are used to calibrate the camera and get the **distortion cofficeints** and **camera matrix**. The below images clearly show the distortion correction based on the camera parameters.
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+distorted                                 |              undistorted 
+------------------------------------------|--------------------------------- 
+![d](./camera_cal/calibration9.jpg) | ![ud](./corrected_images/corrected_calibration9.png) 
+![d1](./test_images/test5.jpg)      | ![ud1](./corrected_images/corrected_calibration1.png) 
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6`         
+this should compute the camera matrix and distoration cofficients and save them as a pcikle file
+ *cameraCalibrationParams.pickle*
+ 
+ ## Theresholding
+ Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
+Below plot shows the thresholded images
+![t](./corrected_images/pipline/threshold5.png)
 
----
-###Writeup / README
+Different thresholding techniques can be seen on a single image below (absSobel threshold, magnitude threshold, direction threshold, HLS threshold respectively)
+![ta](./corrected_images/threshold_subplot.png)
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+These can be acheived by `python testThreshold.py`     
 
-You're reading it!
-###Camera Calibration
+## Perspective transform
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+The idea is to transform the image from camera perspective to the bird eye view perspective. We obtain the transformation matroix using `cv2.getPerspective` and tranform using `cv2.warpPerspective`.
+Below images shows this.
 
-The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
+before transformation                       |              after transformation 
+------------------------------------------- |-------------------------------------------
+![d](./corrected_images/pipline/input0.jpg) | ![ud](./corrected_images/pipline/perspective1.png) 
 
-I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
+This can be achieved by using `python testPerspectiveTransform.py`    
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+## Lane detecetion and Line fitting
 
-![alt text][image1]
+The idea to detect the lane is to divide the image into steps of equal height. For each step, get the pixels at each x-value with histogram and find the peaks in the left and right halves which will give the lanes and then a second order polynomial is used to fit the line across these lanes.
+Below images show the approach
+All the below images are shown after transfomation to bird eye view
+showing the pixels for both left and right lanes
 
-###Pipeline (single images)
+left   | right
+------ | ------
+![lp](./corrected_images/pipline/pixelsLeft.png) | ![rp](./corrected_images/pipline/pixelsright.png)
 
-####1. Provide an example of a distortion-corrected image.
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+showing the histogram of left and right lanes
 
-![alt text][image3]
+raw histogram   | sommthened
+------ | ------
+![lh](./corrected_images/pipline/rawHist.png) | ![rh](./corrected_images/pipline/smoothHist.png)
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+fitting a line across the lane
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+![rh](./corrected_images/pipline/poly7.png)
 
-```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
+drawing the line across the lane
 
-```
-This resulted in the following source and destination points:
+![lh](./corrected_images/pipline/polyfitLeft8.png)
 
-| Source        | Destination   | 
-|:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+Then the trace of the lane is highlighted as shown below:
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+![lt](./corrected_images/pipline/trace10.png)
 
-![alt text][image4]
+## Lane Position and Radius of Curvature
+curvature is found using `np.absolute(((1 + (2 * left_coeffs[0] * y_eval + left_coeffs[1])**2) ** 1.5)/(2 * left_coeffs[0]))` in *imagePipeLine.py*
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+## Wrap back
+The trace is written on top of the image and wrapped back
+![wrap](./corrected_images/pipline/wraptrace11.png)
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The text is writtena on top of the image
+![final](./corrected_images/imageAfterPipeLine.png)
 
-![alt text][image5]
+## Image pipeline
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+As mentioned above, first the image is corrected for distortion, then perspective transformation to bird eye is appalied and the image is then thresholded. On which the lanes are detcted and a 2nd order polynomial is used to fit a line through the lanes, then the curvature and position from center is determined. this data is written on top of the image and finally the image wrapped back to camera perspective.
 
-I did this in lines # through # in my code in `my_other_file.py`
+Below images show the steps:
+input | perspective | thresholded
+------ | --------- | ---------
+![l1](./corrected_images/pipline/input0.png) | ![l2](./corrected_images/pipline/perspective1.png) | ![l3](./corrected_images/pipline/thresoldedHLSBinary4.png)
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+lane  | line fitting| draw the ine
+-------| ------------ | -----------
+![l4](./corrected_images/pipline/wrap6.png) | ![l5](./corrected_images/pipline/poly7.png) ![l6](./corrected_images/pipline/polyfitLeft8.png)
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+trace | wrap back | final image
+------ | -------- | ----------
+![l7](./corrected_images/pipline/trace10.png) | ![l8](./corrected_images/pipline/wraptrace11.png) | ![l9](./corrected_images/imageAfterPipeLine.png)
 
-![alt text][image6]
+## Final output
 
----
+![f](./corrected_images/imageAfterPipeLine.png)
 
-###Pipeline (video)
+The video is avialbel here on [youtube](https://www.youtube.com/watch?v=he3RUaivvJc&feature=youtu.be)
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
-
-Here's a [link to my video result](./project_video.mp4)
-
----
-
-###Discussion
-
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
+## Running the code
+run `python main.py`      
+this should generate the output, change the paths if required.
