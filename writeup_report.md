@@ -113,7 +113,8 @@ line fitting using 2nd order polynomial
 ![l5](./corrected_images/pipeline/poly7.png) 
 
 draw the ine across lanes                    
-[l6](./corrected_images/pipeline/ployfitLeft8.png)
+[l6](./corrected_images/pipeline/ployfitLeft8.png)             
+
 
 trace                                   | wrap back                               | final image                         
 --------------------------------------- | --------------------------------------- | ---------------------------------------
