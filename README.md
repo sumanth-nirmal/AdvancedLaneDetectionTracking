@@ -5,4 +5,4 @@ This pproject aims to detect and track the lanes, this is done as a part of the 
 The result of the project [video](https://www.youtube.com/watch?v=he3RUaivvJc&feature=youtu.be)
 
 
-more details check this https://github.com/sumanth-nirmal/AdvancedLaneDetectionTracking/blob/master/writeup_report.md
+more details check [here](https://github.com/sumanth-nirmal/AdvancedLaneDetectionTracking/blob/master/writeup_report.md)
