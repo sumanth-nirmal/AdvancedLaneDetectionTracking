@@ -20,10 +20,10 @@ The goals / steps of this project are the following:
 ## Calibration
 The test images of the checker boards are used to calibrate the camera and get the **distortion cofficeints** and **camera matrix**. The below images clearly show the distortion correction based on the camera parameters.
 
-distorted                                 |              undistorted 
-------------------------------------------|--------------------------------- 
-![d](./camera_cal/calibration9.jpg) | ![ud](./corrected_images/corrected_calibration9.png) 
-![d1](./test_images/test5.jpg)      | ![ud1](./corrected_images/test51png) 
+distorted                              |              undistorted                         
+-------------------------------------- |---------------------------------------------------
+![d](./camera_cal/calibration9.jpg)    | ![ud](./corrected_images/corrected_calibration9.png) 
+![d1](./test_images/test5.jpg)         | ![ud1](./corrected_images/test51.png) 
 
 run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6`         
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
