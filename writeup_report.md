@@ -29,10 +29,11 @@ run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
  *cameraCalibrationParams.pickle*
  
- ## Theresholding
- Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
+ ## Theresholding                
+Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
 Below plot shows the thresholded images
-![t](./corrected_images/pipline/thresholded5.png)
+
+![t](./corrected_images/pipeline/thresholded5.png)
 
 Different thresholding techniques can be seen on a single image below (absSobel threshold, magnitude threshold, direction threshold, HLS threshold respectively)
 ![ta](./corrected_images/thresholded_subplot.png)
@@ -46,7 +47,7 @@ Below images shows this.
 
 before transformation                       |              after transformation 
 ------------------------------------------- |-------------------------------------------
-![d](./corrected_images/pipline/input0.jpg) | ![ud](./corrected_images/pipline/perspective1.png) 
+![d](./corrected_images/pipeline/input0.jpg) | ![ud](./corrected_images/pipeline/perspective1.png) 
 
 This can be achieved by using `python testPerspectiveTransform.py`    
 
@@ -59,32 +60,32 @@ showing the pixels for both left and right lanes
 
 left   | right
 ------ | ------
-![lp](./corrected_images/pipline/pixelsLeft.png) | ![rp](./corrected_images/pipline/pixelsright.png)
+![lp](./corrected_images/pipeline/pixelsLeft.png) | ![rp](./corrected_images/pipeline/pixelsright.png)
 
 showing the histogram of left and right lanes
 
 raw histogram   | sommthened
 ------ | ------
-![lh](./corrected_images/pipline/rawHist.png) | ![rh](./corrected_images/pipline/smoothHist.png)
+![lh](./corrected_images/pipeline/rawHist.png) | ![rh](./corrected_images/pipeline/smoothHist.png)
 
 fitting a line across the lane
 
-![rh](./corrected_images/pipline/poly7.png)
+![rh](./corrected_images/pipeline/poly7.png)
 
 drawing the line across the lane
 
-![lh](./corrected_images/pipline/polyfitLeft8.png)
+![lh](./corrected_images/pipeline/polyfitLeft8.png)
 
 Then the trace of the lane is highlighted as shown below:
 
-![lt](./corrected_images/pipline/trace10.png)
+![lt](./corrected_images/pipeline/trace10.png)
 
 ## Lane Position and Radius of Curvature
 curvature is found using `np.absolute(((1 + (2 * left_coeffs[0] * y_eval + left_coeffs[1])**2) ** 1.5)/(2 * left_coeffs[0]))` in *imagePipeLine.py*
 
 ## Wrap back
 The trace is written on top of the image and wrapped back
-![wrap](./corrected_images/pipline/wraptrace11.png)
+![wrap](./corrected_images/pipeline/wraptrace11.png)
 
 The text is writtena on top of the image
 ![final](./corrected_images/imageAfterPipeLine.png)
@@ -96,15 +97,15 @@ As mentioned above, first the image is corrected for distortion, then perspectiv
 Below images show the steps:
 input | perspective | thresholded
 ------ | --------- | ---------
-![l1](./corrected_images/pipline/input0.png) | ![l2](./corrected_images/pipline/perspective1.png) | ![l3](./corrected_images/pipline/thresoldedHLSBinary4.png)
+![l1](./corrected_images/pipeline/input0.png) | ![l2](./corrected_images/pipeline/perspective1.png) | ![l3](./corrected_images/pipeline/thresoldedHLSBinary4.png)
 
 lane  | line fitting| draw the ine
 -------| ------------ | -----------
-![l4](./corrected_images/pipline/wrap6.png) | ![l5](./corrected_images/pipline/poly7.png) ![l6](./corrected_images/pipline/polyfitLeft8.png)
+![l4](./corrected_images/pipeline/wrap6.png) | ![l5](./corrected_images/pipeline/poly7.png) ![l6](./corrected_images/pipeline/polyfitLeft8.png)
 
 trace | wrap back | final image
 ------ | -------- | ----------
-![l7](./corrected_images/pipline/trace10.png) | ![l8](./corrected_images/pipline/wraptrace11.png) | ![l9](./corrected_images/imageAfterPipeLine.png)
+![l7](./corrected_images/pipeline/trace10.png) | ![l8](./corrected_images/pipeline/wraptrace11.png) | ![l9](./corrected_images/imageAfterPipeLine.png)
 
 ## Final output
 
