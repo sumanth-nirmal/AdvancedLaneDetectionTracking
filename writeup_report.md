@@ -97,12 +97,23 @@ As mentioned above, first the image is corrected for distortion, then perspectiv
 
 Below images show the steps:
 
-input                                   | perspective                             | thresholded                           
---------------------------------------- | --------------------------------------- | --------------------------------------- ![l1](./corrected_images/pipeline/input0.png) | ![l2](./corrected_images/pipeline/perspective1.png) | ![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
+input                               
+![l1](./corrected_images/pipeline/input0.png)
 
-lane                                    | line fitting                            | draw the ine                           
---------------------------------------- | --------------------------------------- | ---------------------------------------
-![l4](./corrected_images/pipeline/wrap6.png) | ![l5](./corrected_images/pipeline/poly7.png) ![l6](./corrected_images/pipeline/ployfitLeft8.png)
+perspective changed             
+![l2](./corrected_images/pipeline/perspective1.png) 
+
+thresholded image
+![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
+
+lane detection                                                
+![l4](./corrected_images/pipeline/wrap6.png) 
+
+line fitting using 2nd order polynomial                        
+![l5](./corrected_images/pipeline/poly7.png) 
+
+draw the ine across lanes            
+[l6](./corrected_images/pipeline/ployfitLeft8.png)
 
 trace                                   | wrap back                               | final image                         
 --------------------------------------- | --------------------------------------- | ---------------------------------------
