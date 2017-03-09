@@ -113,13 +113,16 @@ line fitting using 2nd order polynomial
 ![l5](./corrected_images/pipeline/poly7.png) 
 
 draw the ine across lanes                    
-[l6](./corrected_images/pipeline/ployfitLeft8.png)                            
+![l6](./corrected_images/pipeline/ployfitLeft8.png)                            
 
+trace of the lane                
+![l7](./corrected_images/pipeline/trace10.png) 
 
+transform back to the camera perspective
+![l8](./corrected_images/pipeline/wraptrace11.png) 
 
-trace                                   | wrap back                               | final image                         
---------------------------------------- | --------------------------------------- | ---------------------------------------
-![l7](./corrected_images/pipeline/trace10.png) | ![l8](./corrected_images/pipeline/wraptrace11.png) | ![l9](./corrected_images/imageAfterPipeLine.png)
+final image
+![l9](./corrected_images/imageAfterPipeLine.png)
 
 ## Final output
 
