@@ -69,15 +69,15 @@ raw histogram                                        | smoothened
 ---------------------------------------------------- | ----------------------------------------------------
 ![lh](./corrected_images/pipeline/rawHist.png)       | ![rh](./corrected_images/pipeline/smoothHist.png)
 
-fitting a line across the lane
+fitting a line across the lane                        
 
 ![rh](./corrected_images/pipeline/poly7.png)
 
-drawing the line across the lane
+drawing the line across the lane                        
 
 ![lh](./corrected_images/pipeline/ployfitLeft8.png)
 
-Then the trace of the lane is highlighted as shown below:
+Then the trace of the lane is highlighted as shown below:                       
 
 ![lt](./corrected_images/pipeline/trace10.png)
 
@@ -97,22 +97,22 @@ As mentioned above, first the image is corrected for distortion, then perspectiv
 
 Below images show the steps:
 
-input                               
+input image                                                              
 ![l1](./corrected_images/pipeline/input0.png)
 
-perspective changed             
+perspective changed                
 ![l2](./corrected_images/pipeline/perspective1.png) 
 
-thresholded image
+thresholded image                       
 ![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
 
-lane detection                                                
+lane detection                                                           
 ![l4](./corrected_images/pipeline/wrap6.png) 
 
-line fitting using 2nd order polynomial                        
+line fitting using 2nd order polynomial                                          
 ![l5](./corrected_images/pipeline/poly7.png) 
 
-draw the ine across lanes            
+draw the ine across lanes                    
 [l6](./corrected_images/pipeline/ployfitLeft8.png)
 
 trace                                   | wrap back                               | final image                         
