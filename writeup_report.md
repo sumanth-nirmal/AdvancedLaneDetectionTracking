@@ -29,7 +29,8 @@ run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
  *cameraCalibrationParams.pickle*
  
- ## Theresholding                
+## Theresholding  
+ 
 Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
 Below plot shows the thresholded images
 
@@ -96,14 +97,14 @@ As mentioned above, first the image is corrected for distortion, then perspectiv
 
 Below images show the steps:
 
-input                                   | perspective                             | thresholded
+input                                   | perspective                             | thresholded                           
 --------------------------------------- | --------------------------------------- | --------------------------------------- ![l1](./corrected_images/pipeline/input0.png) | ![l2](./corrected_images/pipeline/perspective1.png) | ![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
 
-lane                                    | line fitting                            | draw the ine
+lane                                    | line fitting                            | draw the ine                           
 --------------------------------------- | --------------------------------------- | ---------------------------------------
 ![l4](./corrected_images/pipeline/wrap6.png) | ![l5](./corrected_images/pipeline/poly7.png) ![l6](./corrected_images/pipeline/ployfitLeft8.png)
 
-trace                                   | wrap back                               | final image
+trace                                   | wrap back                               | final image                         
 --------------------------------------- | --------------------------------------- | ---------------------------------------
 ![l7](./corrected_images/pipeline/trace10.png) | ![l8](./corrected_images/pipeline/wraptrace11.png) | ![l9](./corrected_images/imageAfterPipeLine.png)
 
