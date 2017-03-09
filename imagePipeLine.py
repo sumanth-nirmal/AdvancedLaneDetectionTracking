@@ -137,8 +137,8 @@ def imagePipeLine(file, filepath=False):
     y_eval = 500
     left_curverad = np.absolute(((1 + (2 * left_coeffs[0] * y_eval + left_coeffs[1])**2) ** 1.5)/(2 * left_coeffs[0]))
     right_curverad = np.absolute(((1 + (2 * right_coeffs[0] * y_eval + right_coeffs[1]) ** 2) **1.5)/(2 * right_coeffs[0]))
-    print("Left lane curve radius: ", left_curverad)
-    print("Right lane curve radius: ", right_curverad)
+    # print("Left lane curve radius: ", left_curverad)
+    # print("Right lane curve radius: ", right_curverad)
     curvature = (left_curverad + right_curverad) / 2
     min_curverad = min(left_curverad, right_curverad)
 

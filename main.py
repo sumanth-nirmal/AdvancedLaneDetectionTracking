@@ -7,8 +7,8 @@ from moviepy.editor import VideoFileClip
 import imagePipeLine
 
 # file names for both input and output
-output_file = 'project_challenge_output_colour.mp4'
-input_file = 'challenge_video.mp4'
+output_file = 'project_output.mp4'
+input_file = 'project_video.mp4'
 
 
 # run the pipeline and generate the ouput video
