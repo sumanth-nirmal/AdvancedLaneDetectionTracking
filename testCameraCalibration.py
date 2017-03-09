@@ -12,7 +12,7 @@ import matplotlib.image as mpimg
 from scipy.signal import find_peaks_cwt
 import pickle
 
-images = glob.glob('test_images/test5.jpg') #glob.glob('camera_cal/calibration*.jpg')
+images = glob.glob('camera_cal/calibration*.jpg')
 
 file = open("cameraCalibrationParams.pickle",'rb')
 object_file = pickle.load(file)
