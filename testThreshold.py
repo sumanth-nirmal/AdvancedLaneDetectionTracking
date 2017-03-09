@@ -24,18 +24,31 @@ img = cv2.undistort(img, mtx, dist, None, mtx)
 
 combined, abs_bin, mag_bin, dir_bin, hls_bin = threshold.imageThreshold(img)
 
-plt.subplot(2, 3, 1)
-plt.imshow(abs_bin, cmap='gray', vmin=0, vmax=1)
-plt.subplot(2, 3, 2)
-plt.imshow(mag_bin, cmap='gray', vmin=0, vmax=1)
-plt.subplot(2, 3, 3)
-plt.imshow(dir_bin, cmap='gray', vmin=0, vmax=1)
-plt.subplot(2, 3, 4)
-plt.imshow(hls_bin, cmap='gray', vmin=0, vmax=1)
-plt.subplot(2, 3, 5)
+s=plt.subplot(2, 3, 1)
 plt.imshow(img)
-plt.subplot(2, 3, 6)
+s.set_title("inputImage")
+
+x = plt.subplot(2, 3, 2)
+plt.imshow(abs_bin, cmap='gray', vmin=0, vmax=1)
+x.set_title("absSobelThrImage")
+
+y=plt.subplot(2, 3, 3)
+plt.imshow(mag_bin, cmap='gray', vmin=0, vmax=1)
+y.set_title("magThrImage")
+
+z=plt.subplot(2, 3, 4)
+plt.imshow(dir_bin, cmap='gray', vmin=0, vmax=1)
+z.set_title("DirThrImage")
+
+r=plt.subplot(2, 3, 5)
+plt.imshow(hls_bin, cmap='gray', vmin=0, vmax=1)
+r.set_title("HLSThImage")
+
+e=plt.subplot(2, 3, 6)
 plt.imshow(combined, cmap='gray', vmin=0, vmax=1)
+e.set_title("finalImage")
+
+plt.savefig('corrected_images/thresholded_subplot.png')
 
 plt.tight_layout()
 plt.show()

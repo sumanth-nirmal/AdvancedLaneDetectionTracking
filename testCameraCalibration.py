@@ -1,3 +1,8 @@
+#!/usr/bin/python
+## Author: sumanth
+## Date: March 08,2017
+# test script for camera calibration
+
 import os
 import cv2
 import glob
