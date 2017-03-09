@@ -47,7 +47,7 @@ Below images shows this.
 
 before transformation                       |              after transformation 
 ------------------------------------------- |-------------------------------------------
-![d](./corrected_images/pipeline/input0.jpg) | ![ud](./corrected_images/pipeline/perspective1.png) 
+![d](./corrected_images/pipeline/input0.png) | ![ud](./corrected_images/pipeline/perspective1.png) 
 
 This can be achieved by using `python testPerspectiveTransform.py`    
 
@@ -64,7 +64,7 @@ left   | right
 
 showing the histogram of left and right lanes
 
-raw histogram   | sommthened
+raw histogram   | smoothened
 ------ | ------
 ![lh](./corrected_images/pipeline/rawHist.png) | ![rh](./corrected_images/pipeline/smoothHist.png)
 
@@ -74,7 +74,7 @@ fitting a line across the lane
 
 drawing the line across the lane
 
-![lh](./corrected_images/pipeline/polyfitLeft8.png)
+![lh](./corrected_images/pipeline/ployfitLeft8.png)
 
 Then the trace of the lane is highlighted as shown below:
 
@@ -97,11 +97,11 @@ As mentioned above, first the image is corrected for distortion, then perspectiv
 Below images show the steps:
 input | perspective | thresholded
 ------ | --------- | ---------
-![l1](./corrected_images/pipeline/input0.png) | ![l2](./corrected_images/pipeline/perspective1.png) | ![l3](./corrected_images/pipeline/thresoldedHLSBinary4.png)
+![l1](./corrected_images/pipeline/input0.png) | ![l2](./corrected_images/pipeline/perspective1.png) | ![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
 
-lane  | line fitting| draw the ine
+lane  | line fitting | draw the ine
 -------| ------------ | -----------
-![l4](./corrected_images/pipeline/wrap6.png) | ![l5](./corrected_images/pipeline/poly7.png) ![l6](./corrected_images/pipeline/polyfitLeft8.png)
+![l4](./corrected_images/pipeline/wrap6.png) | ![l5](./corrected_images/pipeline/poly7.png) ![l6](./corrected_images/pipeline/ployfitLeft8.png)
 
 trace | wrap back | final image
 ------ | -------- | ----------
