@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import pickle
 import cv2
+import numpy as np
 import threshold
 import perspectiveTransform
 
 if __name__ == '__main__':
-    img_file = 'test_images/test5.jpg'
+    img_file = 'test_images/test2.jpg'
 
     #fetch the camera params
     with open('cameraCalibrationParams.pickle', 'rb') as f:
@@ -24,17 +25,41 @@ if __name__ == '__main__':
     img = cv2.undistort(img, mtx, dist, None, mtx)
 
     img, abs_bin, mag_bin, dir_bin, hls_bin = threshold.imageThreshold(img)
-    warped, unwarped, m, m_inv = perspectiveTransform.perspectiveTransform(img)
 
-    s=plt.subplot(1, 2, 1)
+    # perspective transform
+    src = np.float32(
+        [[120, 720],
+        [550, 470],
+        [700, 470],
+        [1160, 720]])
+
+    dst = np.float32(
+        [[200,720],
+        [200,0],
+        [1080,0],
+        [1080,720]])
+
+    warped, unwarped, m, m_inv = perspectiveTransform.perspectiveTransform(img, src, dst)
+
+    s=plt.subplot(2, 2, 1)
     plt.imshow(warped, cmap='gray', vmin=0, vmax=1)
     plt.imshow(img)
     s.set_title("wrapped image")
 
-    s=plt.subplot(1, 2, 2)
+    s=plt.subplot(2, 2, 2)
     plt.imshow(unwarped, cmap='gray', vmin=0, vmax=1)
     plt.imshow(img)
     s.set_title("unwrapped image")
+
+    s=plt.subplot(2, 2, 3)
+    plt.imshow(m, cmap='gray', vmin=0, vmax=1)
+    plt.imshow(img)
+    s.set_title("perspective image")
+
+    s=plt.subplot(2, 2, 4)
+    plt.imshow(m_inv, cmap='gray', vmin=0, vmax=1)
+    plt.imshow(img)
+    s.set_title("inv perspective image")
 
     plt.tight_layout()
     plt.show()

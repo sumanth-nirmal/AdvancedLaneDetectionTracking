@@ -92,3 +92,39 @@ def imageThreshold(img):
 	combined[(abs_bin == 1 | ((mag_bin == 1) & (dir_bin == 1))) | hls_bin == 1] = 1
 
 	return combined, abs_bin, mag_bin, dir_bin, hls_bin
+
+def applyThresholdColorHLS(image, xgrad_thresh=(20,100), s_thresh=(170,255)):
+    # Grayscale image
+    # NOTE: we already saw that standard grayscaling lost color information for the lane lines
+    # Explore gradients in other colors spaces / color channels to see what might work better
+    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+    # Sobel x
+    sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0) # Take the derivative in x
+    abs_sobelx = np.absolute(sobelx) # Absolute x derivative to accentuate lines away from horizontal
+    scaled_sobel = np.uint8(255*abs_sobelx/np.max(abs_sobelx))
+
+    # Threshold x gradient
+    sxbinary = np.zeros_like(scaled_sobel)
+    sxbinary[(scaled_sobel >= xgrad_thresh[0]) & (scaled_sobel <= xgrad_thresh[1])] = 1
+
+    # Threshold colour channel
+
+    # Convert to HLS colour space and separate the S channel
+    # Note: img is the undistorted image
+    hls = cv2.cvtColor(image, cv2.COLOR_RGB2HLS)
+    s_channel = hls[:,:,2]
+
+    # Cont'd: Threshold colour channel
+    s_binary = np.zeros_like(s_channel)
+    s_binary[(s_channel >= s_thresh[0]) & (s_channel <= s_thresh[1])] = 1
+
+    # Stack each channel to view their individual contributions in green and blue respectively
+    # This returns a stack of the two binary images, whose components you can see as different colors
+    color_binary = np.dstack(( np.zeros_like(sxbinary), sxbinary, s_binary))
+
+    # Combine the two binary thresholds
+    combined_binary = np.zeros_like(sxbinary)
+    combined_binary[(s_binary == 1) | (sxbinary == 1)] = 1
+
+    return combined_binary

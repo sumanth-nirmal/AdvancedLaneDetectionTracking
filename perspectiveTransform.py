@@ -3,24 +3,10 @@
 ## Date: March 08,2017
 # methods for perspective transformation
 
-import numpy as np
 import cv2
 
-def perspectiveTransform(img):
+def perspectiveTransform(img, src, dst):
 	img_size = (img.shape[1], img.shape[0])
-
-    #Coordinates of quadrangle vertices
-    # perspective transform to rectify binary image ("birds-eye view")
-	src = np.float32(
-		[[200, 720],
-		[1100, 720],
-		[595, 450],
-		[685, 450]])
-	dst = np.float32(
-		[[300, 720],
-		[980, 720],
-		[300, 0],
-		[980, 0]])
 
 	m = cv2.getPerspectiveTransform(src, dst)
 	m_inv = cv2.getPerspectiveTransform(dst, src)
