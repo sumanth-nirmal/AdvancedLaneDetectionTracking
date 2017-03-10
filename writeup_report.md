@@ -140,4 +140,3 @@ This is the first shot implementation of lane detection and tracking, which can 
 Also Noise in detection of lanes cause to detect higher cruvature, some times lane are not detected (play with the thresholds of gradient and S).
 Possible solution for this would be to use deep learning techniques for semantic segmentation to detect the pixels with porbability of lane and then detect the lane and fit a line acroos the lane.
 
-Som *problems* with the approach are:
