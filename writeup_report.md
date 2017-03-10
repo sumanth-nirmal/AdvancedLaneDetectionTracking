@@ -133,3 +133,11 @@ The video is avialbel here on [youtube](https://www.youtube.com/watch?v=he3RUaiv
 ## Running the code
 run `python main.py`      
 this should generate the output, change the paths if required.
+
+## Discussion
+
+This is the first shot implementation of lane detection and tracking, which can fail in multpile scenarios like when the disturbances on the road can be treated as lane, light conditions can effect the detection etc.
+Also Noise in detection of lanes cause to detect higher cruvature, some times lane are not detected (play with the thresholds of gradient and S).
+Possible solution for this would be to use deep learning techniques for semantic segmentation to detect the pixels with porbability of lane and then detect the lane and fit a line acroos the lane.
+
+Som *problems* with the approach are:
