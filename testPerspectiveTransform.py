@@ -11,6 +11,7 @@ import cv2
 import numpy as np
 import threshold
 import perspectiveTransform
+import glob
 
 if __name__ == '__main__':
     img_file = 'test_images/test2.jpg'
@@ -64,3 +65,21 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.show()
     plt.savefig('corrected_images/perspectiveTransform_subplot.png')
+
+
+## testing on test images
+images = glob.glob('test_images/straight_lines*.jpg')
+
+count = 0;
+for fname in images:
+    img = cv2.imread(fname)
+    count +=1
+    plt.imshow(img)
+    plt.savefig('corrected_images/perspective/input' + str(count) + '.png')
+    plt.gcf().clear()
+
+    # undistort
+    warped, unwarped, M, Minv = perspectiveTransform.perspectiveTransform(img, src, dst)
+    plt.imshow(warped)
+    plt.savefig('corrected_images/perspective/output' + str(count) + '.png')
+    plt.gcf().clear()
