@@ -76,7 +76,7 @@ def find_lanes(image, LaneLines, vis=False):
     # visualisation
     if vis == True:
         plt.clf()
-        plt.imshow(unwarped)
+        plt.imshow(annotated)
         plt.savefig('output_images/pipeline/annotated.jpg')
 
     if find_lanes.composite is True:

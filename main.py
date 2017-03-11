@@ -54,12 +54,13 @@ run = 'IMAGE'
 
 if run == 'VIDEO':
 	# run the pipeline and generate the ouput video
+	print("running on video")
 	video = VideoFileClip(input_file)
 	annotated_video = video.fl_image(lambda img: find_lanes(img, LaneLines))
 	annotated_video.write_videofile(output_file, audio=False)
 elif run == 'IMAGE':
+	print("running on image")
 	# testing the pipeline on an image
-	# uncomment these lines for testing on a signel image
 	im=cv2.imread("test_images/test3.jpg")
 	# with visualisation
 	combined_img = find_lanes(im, LaneLines, True)
