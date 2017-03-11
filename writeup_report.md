@@ -56,8 +56,8 @@ perspective correction shown on straight line images in test_images:
 
 before transformation                             |              after transformation 
 ------------------------------------------------  | ------------------------------------------------
-![r1](./test_images/straight_lines1.png)  | ![rud1](./output_images/perspective/output1.png) 
-![r2](./test_images/straight_lines2.png)  | ![rud2](./output_images/perspective/output2.png) 
+![r1](./test_images/straight_lines1.jpg)  | ![rud1](./output_images/perspective/output1.png) 
+![r2](./test_images/straight_lines2.jpg)  | ![rud2](./output_images/perspective/output2.png) 
 
 
 This can be achieved by using `python testPerspectiveTransform.py`    
@@ -73,10 +73,10 @@ Once the lane is found then a line is fitted accross the lane using `np.polyfit(
 The image below shows where the side barrier detected in the warped image, but the lane lines are correctly identified.
 
 Input image
-![iz](./output_images/pipeline/input.png)
+![iz](./output_images/pipeline/input.jpg)
 
 fitting a line across the lane                        
-![rh](./output_images/pipeline/lanes.png)
+![rh](./output_images/pipeline/lanes.jpg)
 
 
 ## Lane Position and Radius of Curvature
@@ -90,10 +90,10 @@ Fro radius I used the code from the lesson, `self.radii[0] = ((1 + (2*left_fit_c
 
 ## Wrap back
 The trace is written on top of the image and wrapped back
-![wrap](./output_images/pipeline/input.png)
+![wrap](./output_images/pipeline/input.jpg)
 
 The text is writtena on top of the image
-![final](./output_images/pipeline/annotated.png)
+![final](./output_images/pipeline/annotated.jpg)
 
 ## Image pipeline
 
@@ -102,32 +102,32 @@ As mentioned above, first the image is corrected for distortion, then thresholde
 Below images show the steps:
 
 input image                                                              
-![l1](./output_images/pipeline/input.png)
+![l1](./output_images/pipeline/input.jpg)
 
 distortion corrected               
-![l2](./output_images/pipeline/undistort.png) 
+![l2](./output_images/pipeline/undistort.jpg) 
 
  thresholded image                      
-![l3](./output_images/pipeline/threshold.png)
+![l3](./output_images/pipeline/threshold.jpg)
 
 perspective transformation                                                          
-![l4](./corrected_images/pipeline/wrapped.png) 
+![l4](./corrected_images/pipeline/wrapped.jpg) 
 
 detect lanes and fit a line                                       
-![l5](./output_images/pipeline/lanes.pngg) 
+![l5](./output_images/pipeline/lanes.jpgg) 
 
 draw the trace                 
-![l6](./output_images/pipeline/laneOnBirdEye.png)                            
+![l6](./output_images/pipeline/laneOnBirdEye.jpg)                            
 
 transform back to the camera perspective               
-![l7](./output_images/pipeline/unwrapped.png) 
+![l7](./output_images/pipeline/unwrapped.jpg) 
 
 annotate and paint the lanes
-![l8](./output_images/pipeline/annotated.png) 
+![l8](./output_images/pipeline/annotated.jpg) 
 
 ## Final output
 
-![f](./output_images/pipeline/annotated.png) 
+![f](./output_images/pipeline/annotated.jpg) 
 
 The video is avialbel here on [youtube](https://www.youtube.com/watch?v=QqeRckiXBss&feature=youtu.be)
 
