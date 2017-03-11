@@ -1,8 +1,14 @@
+
+#!/usr/bin/python
+## Author: sumanth
+## Date: March 08,2017
+# main file for implementing line
+
 import numpy as np
 
 class Line():
-    # 0th index will correspond to the left line
-    # 1st index will correspond to the right line
+    #0 - right
+    #1 - left
     def __init__(self):
         ym_per_pix = 30/720 # meters per pixel in y dimension
         xm_per_pix = 3.7/700 # meters per pixel in x dimension
@@ -32,7 +38,6 @@ class Line():
         self.pixels_to_length = []
 
     def reset(self):
-        # comments in __init__()
         self.detected = False
         self.recent_xfitted = []
         self.bestx = []

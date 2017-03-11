@@ -26,6 +26,7 @@ def calibrateCamera(path, tp, x, y):
     #fetch the images
     images = glob.glob(path+'*.jpg')
     # Step through the list and search for chessboard corners
+    count=0
     for fname in images:
         img = cv2.imread(fname)
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -39,9 +40,11 @@ def calibrateCamera(path, tp, x, y):
             imgpoints.append(corners)
 
             # Draw and display the corners
+            count += 1
             img = cv2.drawChessboardCorners(img, (9,6), corners, ret)
-            cv2.imshow('img',img)
-            cv2.waitKey(1200)
+            plt.clf()
+            plt.imshow(img)
+            plt.savefig('output_images/calibrated/output' + str(count) + '.jpg')
 
     cv2.destroyAllWindows()
 

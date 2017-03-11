@@ -1,3 +1,9 @@
+
+#!/usr/bin/python
+## Author: sumanth
+## Date: March 08,2017
+# helper functions to detect the lane mostly taken from the class
+
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt

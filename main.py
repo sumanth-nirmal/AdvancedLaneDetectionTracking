@@ -48,16 +48,20 @@ SobelX.thresh, HlsGrad.s_thresh = [20, 100], [120, 225]
 ColorFilt.yellow, ColorFilt.white = [[215, 255], [140, 255], [0, 160]],[[225, 255], [225, 255], [225, 255]]
 
 
-# run the pipeline and generate the ouput video
-video = VideoFileClip(input_file)
-annotated_video = video.fl_image(lambda img: find_lanes(img, LaneLines))
-annotated_video.write_videofile(output_file, audio=False)
+#######################
+# set the flag to run
+run = 'IMAGE'
 
-
-# testing the pipeline on an image
-# uncomment these lines for testing on a signel image
-# im=cv2.imread("test_images/test3.jpg")
-# combined_img = find_lanes(im, LaneLines)
-# plt.clf()
-# plt.imshow(combined_img)
-# plt.savefig('corrected_images/imageAfterPipeLine.png')
+if run == 'VIDEO':
+	# run the pipeline and generate the ouput video
+	video = VideoFileClip(input_file)
+	annotated_video = video.fl_image(lambda img: find_lanes(img, LaneLines))
+	annotated_video.write_videofile(output_file, audio=False)
+elif run == 'IMAGE':
+	# testing the pipeline on an image
+	# uncomment these lines for testing on a signel image
+	im=cv2.imread("test_images/test3.jpg")
+	# with visualisation
+	combined_img = find_lanes(im, LaneLines, True)
+else:
+	print("Error set the run flag")
