@@ -111,10 +111,10 @@ distortion corrected
 ![l3](./output_images/pipeline/threshold.jpg)
 
 perspective transformation                                                          
-![l4](./corrected_images/pipeline/wrapped.jpg) 
+![l4](./output_images/pipeline/wrapped.jpg) 
 
 detect lanes and fit a line                                       
-![l5](./output_images/pipeline/lanes.jpgg) 
+![l5](./output_images/pipeline/lanes.jpg) 
 
 draw the trace                 
 ![l6](./output_images/pipeline/laneOnBirdEye.jpg)                            
