@@ -17,137 +17,119 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-## Calibration
-The test images of the checker boards are used to calibrate the camera and get the **distortion cofficeints** and **camera matrix**. The below images clearly show the distortion correction based on the camera parameters.
+## Camera Calibration
+The test images of the checker boards are used to calibrate the camera and get the **distortion cofficeints** and **camera matrix**. `cv2.findChessboardCorners` is used to detect the checker boards and `cv2.calibrateCamera` is used to calibrate the camera and `cv2.undistort` is used to undotort the image based on the camera settings.
+The code is available in `calibrateCamera.py`.
+
+ForThe below images clearly show the distortion correction based on the camera parameters.
 
 distorted                                      |              undistorted                         
 ---------------------------------------------- | ----------------------------------------------
-![d](./camera_cal/calibration9.jpg)            | ![ud](./corrected_images/corrected_calibration9.png) 
-![d1](./test_images/test5.jpg)                 | ![ud1](./corrected_images/test51.png) 
+![d](./camera_cal/calibratedion2.jpg)          | ![ud](./output_images/calibrated/corrected2.png) 
+![d1](./test_images/straight_lines2.jpg)       | ![ud1](./corrected_images/testCorrected2.png) 
 
 run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6`         
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
  *cameraCalibrationParams.pickle*
  
+run `python testCameraCalibration.py` to generate these test images
+ 
 ## Theresholding  
  
-Used the following approach for thresholding, Threshold with x gradient for greyscale image and Threshold with colour S channel and then combine the two binary thresholds to generate a binary image.
-Below plot shows the thresholded images
+For thresholding I use three combined approaches: 
+* Sobel gradient threshold in the horizontal (x) direction, implemented in function `SobelX()`
+* HLS threshold in the S-plane, implemeneted in function `HlsGrad()`
+* RGB thresholds around yellow and white colors.implemented in  function `ColorFilt`
 
-![t](./corrected_images/pipeline/thresholded5.png)
+In below composite image, Red pixels are represent the yellow or white RGB thresholding, green pixels represents the Sobel gradient thresholding, and blue pixels represent HLS thresholding. 
+The relevant code is available in *threshold.py* and the test images can be obtained by running `python testThreshold.py`
 
-The thresholding technique used is shown on all the test images below:
+The thresholding technique used is shown on the test images below:
 
-![z1](./corrected_images/threshold/image1.png)
-![z2](./corrected_images/threshold/image2.png)
-![z3](./corrected_images/threshold/image3.png)
-![z4](./corrected_images/threshold/image4.png)
-![z5](./corrected_images/threshold/image5.png)
-![z6](./corrected_images/threshold/image6.png)
-![z7](./corrected_images/threshold/image7.png)
-![z8](./corrected_images/threshold/image8.png)
-
-**note: additional info**
-Different thresholding techniques can be seen on a single image below (absSobel threshold, magnitude threshold, direction threshold, HLS threshold respectively)
-![ta](./corrected_images/thresholded_subplot.png)
-
-These can be acheived by `python testThreshold.py`     
+![z1](./output_images/threshold/image1.png)
+![z5](./output_images/threshold/image5.png)
 
 ## Perspective transform
 
-The idea is to transform the image from camera perspective to the bird eye view perspective. We obtain the transformation matroix using `cv2.getPerspective` and tranform using `cv2.warpPerspective`.
-Below images shows this.
-
-before transformation                             |              after transformation 
-------------------------------------------------  | ------------------------------------------------
-![d](./corrected_images/pipeline/input0.png)      | ![ud](./corrected_images/pipeline/perspective1.png) 
-
-This can be achieved by using `python testPerspectiveTransform.py`    
-
+The idea is to transform the image from camera perspective to the bird eye view perspective. we use `cv2.getPerspectiveTransform` to get the wrap matrix from the wrap polygon and tranform using `cv2.warpPerspective` and the co ordinates for the wrap polygon are obtained from trail and error and decided whihc can be seen in function `warp_and_unwarp_params()`, the wrap can be achived by function `warp()` in file *perspectiveTransofmration.py*
 perspective correction shown on straight line images in test_images:
 
 before transformation                             |              after transformation 
 ------------------------------------------------  | ------------------------------------------------
-![d1](./corrected_images/perspective/input1.png)  | ![ud1](./corrected_images/perspective/output1.png) 
-![d2](./corrected_images/perspective/input2.png)  | ![ud2](./corrected_images/perspective/output2.png) 
+![d1](./test_images/straight_lines1.png)  | ![ud1](./output_images/perspective/output1.png) 
+![d2](./test_images/straight_lines2.png)  | ![ud2](./output_images/perspective/output2.png) 
+
+
+This can be achieved by using `python testPerspectiveTransform.py`    
 
 ## Lane detecetion and Line fitting
 
-The idea to detect the lane is to divide the image into steps of equal height. For each step, get the pixels at each x-value with histogram and find the peaks in the left and right halves which will give the lanes and then a second order polynomial is used to fit the line across these lanes.
-Below images show the approach
-All the below images are shown after transfomation to bird eye view
-showing the pixels for both left and right lanes
+I created a histogram of the binary image column-wise, for the bottom half of the image, for the initial search, left and right lanes start anywhere in the left-half and righ-half of the image, respectively. For subsequent images, search is only done within a neighborhood of the last frame. whihc preventes the lane lines from jumping with false positives
 
-left                                                 | right
----------------------------------------------------- | ----------------------------------------------------
-![lp](./corrected_images/pipeline/pixelsLeft.png)    | ![rp](./corrected_images/pipeline/pixelsright.png)
+The above approach is implemented in `find_lines()` in file *laneFinder.py*
 
-showing the histogram of left and right lanes
+Once the lane is found then a line is fitted accross the lane using `np.polyfit()` as in the class this can be seen in `draw_lines()` in file *line.py*.
 
-raw histogram                                        | smoothened
----------------------------------------------------- | ----------------------------------------------------
-![lh](./corrected_images/pipeline/rawHist.png)       | ![rh](./corrected_images/pipeline/smoothHist.png)
+The image below shows where the side barrier detected in the warped image, but the lane lines are correctly identified.
+
+Input image
+![iz](./output_images/pipeline/input.png)
 
 fitting a line across the lane                        
+![rh](./output_images/pipeline/lanes.png)
 
-![rh](./corrected_images/pipeline/poly7.png)
-
-drawing the line across the lane                        
-
-![lh](./corrected_images/pipeline/ployfitLeft8.png)
-
-Then the trace of the lane is highlighted as shown below:                       
-
-![lt](./corrected_images/pipeline/trace10.png)
 
 ## Lane Position and Radius of Curvature
-curvature is found using `np.absolute(((1 + (2 * left_coeffs[0] * y_eval + left_coeffs[1])**2) ** 1.5)/(2 * left_coeffs[0]))` in *imagePipeLine.py*
+
+Car position in the lane is measured by calculating the difference between the distance from center of image to left line and the distance from center of image to right line. Which is then converted from pixels to meters, gives the relative position within the lane. 0 means the car is centered. 
+
+This approach is implemented in `position()` in file *line.py*
+
+Fro radius I used the code from the lesson, `self.radii[0] = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])` in `draw_lines()` file *line.py*
+
 
 ## Wrap back
 The trace is written on top of the image and wrapped back
-![wrap](./corrected_images/pipeline/wraptrace11.png)
+![wrap](./output_images/pipeline/input.png)
 
 The text is writtena on top of the image
-![final](./corrected_images/imageAfterPipeLine.png)
+![final](./output_images/pipeline/annotated.png)
 
 ## Image pipeline
 
-As mentioned above, first the image is corrected for distortion, then perspective transformation to bird eye is appalied and the image is then thresholded. On which the lanes are detcted and a 2nd order polynomial is used to fit a line through the lanes, then the curvature and position from center is determined. this data is written on top of the image and finally the image wrapped back to camera perspective.
+As mentioned above, first the image is corrected for distortion, then thresholded, then perspective transformation to bird eye is appalied. On which the lanes are detcted and a polynomial is used to fit a line through the lanes, then the curvature and position from center is determined. this data is written on top of the image and finally the image wrapped back to camera perspective.
 
 Below images show the steps:
 
 input image                                                              
-![l1](./corrected_images/pipeline/input0.png)
+![l1](./output_images/pipeline/input.png)
 
-perspective changed                
-![l2](./corrected_images/pipeline/perspective1.png) 
+distortion corrected               
+![l2](./output_images/pipeline/undistort.png) 
 
-thresholded image                       
-![l3](./corrected_images/pipeline/thresholdedHLSBinary4.png)
+ thresholded image                      
+![l3](./output_images/pipeline/threshold.png)
 
-lane detection                                                           
-![l4](./corrected_images/pipeline/wrap6.png) 
+perspective transformation                                                          
+![l4](./corrected_images/pipeline/wrapped.png) 
 
-line fitting using 2nd order polynomial                                          
-![l5](./corrected_images/pipeline/poly7.png) 
+detect lanes and fit a line                                       
+![l5](./output_images/pipeline/lanes.pngg) 
 
-draw the ine across lanes                    
-![l6](./corrected_images/pipeline/ployfitLeft8.png)                            
+draw the trace                 
+![l6](./output_images/pipeline/laneOnBirdEye.png)                            
 
-trace of the lane                
-![l7](./corrected_images/pipeline/trace10.png) 
+transform back to the camera perspective               
+![l7](./output_images/pipeline/unwrapped.png) 
 
-transform back to the camera perspective
-![l8](./corrected_images/pipeline/wraptrace11.png) 
-
-final image
-![l9](./corrected_images/imageAfterPipeLine.png)
+annotate and paint the lanes
+![l8](./output_images/pipeline/annotated.png) 
 
 ## Final output
 
-![f](./corrected_images/imageAfterPipeLine.png)
+![f](./output_images/pipeline/annotated.png) 
 
-The video is avialbel here on [youtube](https://www.youtube.com/watch?v=he3RUaivvJc&feature=youtu.be)
+The video is avialbel here on [youtube](https://www.youtube.com/watch?v=QqeRckiXBss&feature=youtu.be)
 
 ## Running the code
 run `python main.py`      
