@@ -25,8 +25,8 @@ ForThe below images clearly show the distortion correction based on the camera p
 
 distorted                                      |              undistorted                         
 ---------------------------------------------- | ----------------------------------------------
-![d](./camera_cal/calibratedion2.jpg)          | ![ud](./output_images/calibrated/corrected2.png) 
-![d1](./test_images/straight_lines2.jpg)       | ![ud1](./corrected_images/testCorrected2.png) 
+![d](./camera_cal/calibration2.jpg)          | ![ud](./output_images/calibrated/corrected2.png) 
+![d1](./test_images/straight_lines2.jpg)       | ![ud1](./output_images/calibrated/testCorrected2.png) 
 
 run `python calibrateCamera.py camera_cal/calibration test_images/straight_lines1.jpg 9 6`         
 this should compute the camera matrix and distoration cofficients and save them as a pcikle file
@@ -56,8 +56,8 @@ perspective correction shown on straight line images in test_images:
 
 before transformation                             |              after transformation 
 ------------------------------------------------  | ------------------------------------------------
-![d1](./test_images/straight_lines1.png)  | ![ud1](./output_images/perspective/output1.png) 
-![d2](./test_images/straight_lines2.png)  | ![ud2](./output_images/perspective/output2.png) 
+![r1](./test_images/straight_lines1.png)  | ![rud1](./output_images/perspective/output1.png) 
+![r2](./test_images/straight_lines2.png)  | ![rud2](./output_images/perspective/output2.png) 
 
 
 This can be achieved by using `python testPerspectiveTransform.py`    
