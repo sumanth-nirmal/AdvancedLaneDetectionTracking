@@ -9,15 +9,17 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import pickle
 import threshold
+import glob
 
 img_file = 'test_images/test6.jpg'
 
 # fetch the camera p[arameters
 with open('cameraCalibrationParams.pickle', 'rb') as f:
-	save_dict = pickle.load(f)
+    save_dict = pickle.load(f)
 mtx = save_dict['mtx']
 dist = save_dict['dist']
 
+##### Option -1 thresholding
 # load a test image
 img = mpimg.imread(img_file)
 img = cv2.undistort(img, mtx, dist, None, mtx)
@@ -52,3 +54,21 @@ plt.savefig('corrected_images/thresholded_subplot.png')
 
 plt.tight_layout()
 plt.show()
+plt.gcf().clear()
+
+
+#### option - 2
+# generate for all the test images
+xgrad_thresh_temp = (40,100)
+s_thresh_temp=(150,255)
+
+images = glob.glob('test_images/*.jpg')
+
+count = 0;
+for fname in images:
+    img = cv2.imread(fname)
+    count +=1
+    combined_binary = threshold.applyThresholdColorHLS(img, xgrad_thresh=xgrad_thresh_temp, s_thresh=s_thresh_temp)
+    plt.imshow(combined_binary)
+    plt.savefig('corrected_images/threshold/image' + str(count) + '.png')
+    plt.gcf().clear()
