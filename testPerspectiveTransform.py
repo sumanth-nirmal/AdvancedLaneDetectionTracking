@@ -78,7 +78,7 @@ for fname in images:
     plt.savefig('corrected_images/perspective/input' + str(count) + '.png')
     plt.gcf().clear()
 
-    # undistort
+    # apply perspective correction
     warped, unwarped, M, Minv = perspectiveTransform.perspectiveTransform(img, src, dst)
     plt.imshow(warped)
     plt.savefig('corrected_images/perspective/output' + str(count) + '.png')

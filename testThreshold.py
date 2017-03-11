@@ -69,6 +69,6 @@ for fname in images:
     img = cv2.imread(fname)
     count +=1
     combined_binary = threshold.applyThresholdColorHLS(img, xgrad_thresh=xgrad_thresh_temp, s_thresh=s_thresh_temp)
-    plt.imshow(combined_binary)
+    plt.imshow(combined_binary, cmap="gray")
     plt.savefig('corrected_images/threshold/image' + str(count) + '.png')
     plt.gcf().clear()
