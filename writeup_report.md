@@ -36,6 +36,18 @@ Below plot shows the thresholded images
 
 ![t](./corrected_images/pipeline/thresholded5.png)
 
+The thresholding technique used is shown on all the test images below:
+
+![z1](./corrected_images/threshold/image1.png)
+![z2](./corrected_images/threshold/image2.png)
+![z3](./corrected_images/threshold/image3.png)
+![z4](./corrected_images/threshold/image4.png)
+![z5](./corrected_images/threshold/image5.png)
+![z6](./corrected_images/threshold/image6.png)
+![z7](./corrected_images/threshold/image7.png)
+![z8](./corrected_images/threshold/image8.png)
+
+**note: additional info**
 Different thresholding techniques can be seen on a single image below (absSobel threshold, magnitude threshold, direction threshold, HLS threshold respectively)
 ![ta](./corrected_images/thresholded_subplot.png)
 
@@ -51,6 +63,13 @@ before transformation                             |              after transform
 ![d](./corrected_images/pipeline/input0.png)      | ![ud](./corrected_images/pipeline/perspective1.png) 
 
 This can be achieved by using `python testPerspectiveTransform.py`    
+
+perspective correction shown on straight line images in test_images:
+
+before transformation                             |              after transformation 
+------------------------------------------------  | ------------------------------------------------
+![d1](./corrected_images/perspective/input1.png)  | ![ud1](./corrected_images/perspective/output1.png) 
+![d2](./corrected_images/perspective/input2.png)  | ![ud2](./corrected_images/perspective/output2.png) 
 
 ## Lane detecetion and Line fitting
 
