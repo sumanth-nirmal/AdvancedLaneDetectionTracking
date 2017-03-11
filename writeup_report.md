@@ -119,17 +119,17 @@ detect lanes and fit a line
 draw the trace                 
 ![l6](./output_images/pipeline/laneOnBirdEye.jpg)                            
 
-transform back to the camera perspective               
+transform back to the camera perspective                 
 ![l7](./output_images/pipeline/unwrapped.jpg) 
 
-annotate and paint the lanes
+annotate and paint the lanes                 
 ![l8](./output_images/pipeline/annotated.jpg) 
 
 ## Final output
 
 ![f](./output_images/pipeline/annotated.jpg) 
 
-The video is avialbel here on [youtube](https://www.youtube.com/watch?v=QqeRckiXBss&feature=youtu.be)
+The video is avialble here on [youtube](https://www.youtube.com/watch?v=QqeRckiXBss&feature=youtu.be)
 
 ## Running the code
 run `python main.py`      
